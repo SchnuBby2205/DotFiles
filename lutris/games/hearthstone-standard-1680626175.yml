@@ -1,0 +1,86 @@
+game:
+  arch: win64
+  exe: drive_c/Program Files (x86)/Battle.net/Battle.net.exe
+  prefix: /spiele/hearthstone
+game_slug: hearthstone
+name: Hearthstone
+requires: null
+script:
+  files:
+  - setup: http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cde7641c96425/retail.1/Battle.net-Setup-enUS.exe
+  game:
+    arch: win64
+    exe: drive_c/Program Files (x86)/Battle.net/Battle.net.exe
+    prefix: $GAMEDIR
+  installer:
+  - task:
+      arch: win64
+      prefix: /home/SchnuBby/Games/hearthstone
+      wine_path: /home/SchnuBby/.local/share/lutris/runners/wine/lutris-7.2-2-x86_64/bin/wine
+  - task:
+      app: arial
+      arch: win64
+      prefix: /home/SchnuBby/Games/hearthstone
+      silent: 'True'
+      wine_path: /home/SchnuBby/.local/share/lutris/runners/wine/lutris-7.2-2-x86_64/bin/wine
+  - task:
+      arch: win64
+      prefix: /home/SchnuBby/Games/hearthstone
+      wine_path: /home/SchnuBby/.local/share/lutris/runners/wine/lutris-7.2-2-x86_64/bin/wine
+  - write_json:
+      data:
+        Client:
+          GameLaunchWindowBehavior: '2'
+          GameSearch:
+            BackgroundSearch: 'true'
+          HardwareAcceleration: 'false'
+          Sound:
+            Enabled: 'false'
+          Streaming:
+            StreamingEnabled: 'false'
+      file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config
+  - write_file:
+      content: hasseennewcinematic=True
+      file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Blizzard/Hearthstone/options.txt
+  - task:
+      arch: win64
+      key: backend
+      path: HKEY_CURRENT_USER\Software\Wine\DXVA2
+      prefix: /home/SchnuBby/Games/hearthstone
+      value: va
+      wine_path: /home/SchnuBby/.local/share/lutris/runners/wine/lutris-7.2-2-x86_64/bin/wine
+  - task:
+      arch: win64
+      prefix: /home/SchnuBby/Games/hearthstone
+      wine_path: /home/SchnuBby/.local/share/lutris/runners/wine/lutris-7.2-2-x86_64/bin/wine
+  - task:
+      arch: win64
+      env: {}
+      exclude_processes: Battle.net.exe Agent.exe "Battle.net Helper.exe" wineconsole
+        explorer.exe conhost.exe svchost.exe
+      executable: /home/SchnuBby/.cache/lutris/installer/hearthstone/setup/Battle.net-Setup-enUS.exe
+      prefix: /home/SchnuBby/Games/hearthstone
+      wine_path: /home/SchnuBby/.local/share/lutris/runners/wine/lutris-7.2-2-x86_64/bin/wine
+  - task:
+      arch: win64
+      prefix: /home/SchnuBby/Games/hearthstone
+      wine_path: /home/SchnuBby/.local/share/lutris/runners/wine/lutris-7.2-2-x86_64/bin/wine
+  system:
+    exclude_processes: Agent.exe "Battle.net Helper.exe"
+  wine:
+    overrides:
+      locationapi: d
+    version: lutris-7.2-2-x86_64
+slug: hearthstone-standard
+system:
+  exclude_processes: Agent.exe "Battle.net Helper.exe"
+  game_path: /spiele
+variables: {}
+version: Standard
+wine:
+  esync: true
+  fsync: true
+  overrides:
+    locationapi: d
+  version: lutris-7.2-2-x86_64
+year: 2014
