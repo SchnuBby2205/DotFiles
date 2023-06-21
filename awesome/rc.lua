@@ -574,7 +574,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 beautiful.useless_gap = 15
 
-awful.spawn.with_shell('feh --randomize --bg-fill /home/schnubby/Downloads/fuckscapes/')
+awful.spawn.with_shell('feh --randomize --bg-fill /usr/share/backgrounds')
 awful.spawn.with_shell('picom &')
 awful.spawn.with_shell('polybar &')
 awful.spawn.with_shell('xrandr --rate 144')
