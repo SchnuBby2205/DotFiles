@@ -316,11 +316,16 @@ globalkeys = gears.table.join(
 
     -- Prompt
     --awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-    awful.key({ modkey },            "r",     function () awful.spawn.with_shell('rofi -show drun') end,
-              {description = "Start ROFI", group = "Apps"}),
-
     awful.key({ modkey, "Shift" },            "f",     function () awful.spawn.with_shell('firefox') end,
               {description = "Start Firefox", group = "Apps"}),
+    awful.key({ modkey, "Shift" },            "l",     function () awful.spawn.with_shell('lutris') end,
+              {description = "Start Lutris", group = "Apps"}),
+    awful.key({ modkey },            "r",     function () awful.spawn.with_shell('rofi -show drun') end,
+              {description = "Start ROFI", group = "Apps"}),
+    awful.key({ modkey, "Shift" },            "t",     function () awful.spawn.with_shell('teamspeak3') end,
+              {description = "Start Teamspeak", group = "Apps"}),
+    awful.key({ modkey, "Shift" },            "v",     function () awful.spawn.with_shell('code') end,
+              {description = "Start VSCode", group = "Apps"}),
 
     awful.key({ modkey }, "x",
               function ()
@@ -577,4 +582,4 @@ beautiful.useless_gap = 15
 awful.spawn.with_shell('feh --randomize --bg-fill /usr/share/backgrounds')
 awful.spawn.with_shell('picom &')
 awful.spawn.with_shell('polybar &')
-awful.spawn.with_shell('xrandr --rate 144')
+--awful.spawn.with_shell('xrandr --rate 144')
