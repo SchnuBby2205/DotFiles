@@ -322,6 +322,8 @@ globalkeys = gears.table.join(
               {description = "Start Lutris", group = "Apps"}),
     awful.key({ modkey },            "r",     function () awful.spawn.with_shell('rofi -show drun') end,
               {description = "Start ROFI", group = "Apps"}),
+    awful.key({ modkey, "Shift" },            "s",     function () awful.spawn.with_shell('steam') end,
+              {description = "Start Steam", group = "Apps"}),
     awful.key({ modkey, "Shift" },            "t",     function () awful.spawn.with_shell('teamspeak3') end,
               {description = "Start Teamspeak", group = "Apps"}),
     awful.key({ modkey, "Shift" },            "v",     function () awful.spawn.with_shell('code') end,
@@ -577,7 +579,7 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-beautiful.useless_gap = 15
+beautiful.useless_gap = 1
 
 awful.spawn.with_shell('feh --randomize --bg-fill /usr/share/backgrounds')
 awful.spawn.with_shell('picom &')
