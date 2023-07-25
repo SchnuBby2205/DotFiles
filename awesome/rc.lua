@@ -62,13 +62,13 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
 --    awful.layout.suit.floating,
-    awful.layout.suit.tile,
+--    awful.layout.suit.tile,
 --    awful.layout.suit.tile.left,
 --    awful.layout.suit.tile.bottom,
 --    awful.layout.suit.tile.top,
 --    awful.layout.suit.fair,
 --    awful.layout.suit.fair.horizontal,
---    awful.layout.suit.spiral,
+    awful.layout.suit.spiral,
 --    awful.layout.suit.spiral.dwindle,
 --    awful.layout.suit.max,
 --    awful.layout.suit.max.fullscreen,
@@ -169,7 +169,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    -- awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "Main", "Games", "Coding" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -225,7 +226,8 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    --awful.button({ }, 3, function () mymainmenu:toggle() end),
+    --awful.button({ }, 3, awful.tag.viewnext),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -254,8 +256,8 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
+    --awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
+    --          {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
     awful.key({ modkey, "Control"   }, "Right", function () awful.client.swap.byidx(  1)    end,
@@ -317,17 +319,20 @@ globalkeys = gears.table.join(
     -- Prompt
     --awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
     awful.key({ modkey, "Shift" },            "f",     function () awful.spawn.with_shell('firefox') end,
-              {description = "Start Firefox", group = "Apps"}),
+              {description = "Start Firefox", group = "SchnuBby"}),
     awful.key({ modkey, "Shift" },            "l",     function () awful.spawn.with_shell('lutris') end,
-              {description = "Start Lutris", group = "Apps"}),
+              {description = "Start Lutris", group = "SchnuBby"}),
     awful.key({ modkey },            "r",     function () awful.spawn.with_shell('rofi -show drun') end,
-              {description = "Start ROFI", group = "Apps"}),
+              {description = "Start ROFI", group = "SchnuBby"}),
     awful.key({ modkey, "Shift" },            "s",     function () awful.spawn.with_shell('steam') end,
-              {description = "Start Steam", group = "Apps"}),
+              {description = "Start Steam", group = "SchnuBby"}),
     awful.key({ modkey, "Shift" },            "t",     function () awful.spawn.with_shell('teamspeak3') end,
-              {description = "Start Teamspeak", group = "Apps"}),
-    awful.key({ modkey, "Shift" },            "v",     function () awful.spawn.with_shell('code') end,
-              {description = "Start VSCode", group = "Apps"}),
+              {description = "Start Teamspeak", group = "SchnuBby"}),
+              awful.key({ modkey, "Shift" },            "v",     function () awful.spawn.with_shell('code') end,
+              {description = "Start VSCode", group = "SchnuBby"}),
+    awful.key({ modkey },            "w",     function () awful.spawn.with_shell('polybar-msg cmd toggle') end,
+              {description = "Toggle Polybar", group = "SchnuBby"}),
+
 
     awful.key({ modkey }, "x",
               function ()
