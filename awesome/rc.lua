@@ -61,7 +61,7 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
---    awful.layout.suit.floating,
+    awful.layout.suit.floating,
 --    awful.layout.suit.tile,
 --    awful.layout.suit.tile.left,
 --    awful.layout.suit.tile.bottom,
@@ -170,7 +170,14 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     -- awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-    awful.tag({ "Main", "Games", "Coding" }, s, awful.layout.layouts[1])
+    -- awful.tag({ "Main", "Games", "Coding" }, s, awful.layout.layouts[1])
+    
+    local names = { "Main", "Games", "Coding" }
+    local l = awful.layout.suit  -- Just to save some typing: use an alias.
+    local layouts = { l.floating, l.max.fullscreen, l.spiral }
+    -- Fullscreen mal testen
+    --local layouts = { l.floating, l.max.fullscreen, l.spiral }
+    awful.tag(names, s, layouts)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -226,8 +233,9 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    --awful.button({ }, 3, function () mymainmenu:toggle() end),
-    --awful.button({ }, 3, awful.tag.viewnext),
+      --awful.button({ }, 3, function () mymainmenu:toggle() end),
+      --awful.button({ }, 3, awful.tag.viewnext),
+    -- Standart
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -270,7 +278,7 @@ globalkeys = gears.table.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ modkey,           }, "Tab",
+    --[[awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
             if client.focus then
@@ -278,7 +286,7 @@ globalkeys = gears.table.join(
             end
         end,
         {description = "go back", group = "client"}),
-
+]]--
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
@@ -299,9 +307,9 @@ globalkeys = gears.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
+    awful.key({ modkey, "Control"          }, "space", function () awful.layout.inc( 1)                end,
               {description = "select next", group = "layout"}),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
+    awful.key({ modkey, "Control", "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
     awful.key({ modkey, "Control" }, "n",
@@ -332,7 +340,23 @@ globalkeys = gears.table.join(
               {description = "Start VSCode", group = "SchnuBby"}),
     awful.key({ modkey },            "w",     function () awful.spawn.with_shell('polybar-msg cmd toggle') end,
               {description = "Toggle Polybar", group = "SchnuBby"}),
-
+    awful.key({ modkey,           }, "Tab",
+              function ()
+                  -- awful.client.focus.history.previous()
+                  awful.client.focus.byidx(1)
+                  if client.focus then
+                      client.focus:raise()
+                  end
+              end),
+          
+    awful.key({ modkey, "Control"   }, "Tab",
+              function ()
+                  -- awful.client.focus.history.previous()
+                  awful.client.focus.byidx(-1)
+                  if client.focus then
+                      client.focus:raise()
+                  end
+              end),
 
     awful.key({ modkey }, "x",
               function ()
@@ -358,7 +382,7 @@ clientkeys = gears.table.join(
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
+    awful.key({ modkey, }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
@@ -444,6 +468,13 @@ for i = 1, 9 do
 end
 
 clientbuttons = gears.table.join(
+    awful.button({ modkey }, 2, function (c) c:kill() end),    
+    awful.button({ modkey }, 5, function (c) c.minimized = true end),
+    awful.button({ modkey }, 4, function (c) local c = awful.client.restore() if c then c:emit_signal("request::activate", "key.unminimize", {raise = true}) end end),
+    awful.button({ modkey, "Control" }, 4, function (c) c.fullscreen = not c.fullscreen c:raise() end),
+    --awful.button({ modkey, "Shift" }, 4, awful.tag.viewnext),
+    --awful.button({ modkey, "Shift" }, 5, awful.tag.viewprev),
+
     awful.button({ }, 1, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
     end),
@@ -464,6 +495,14 @@ root.keys(globalkeys)
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
+    { rule = { instance = "lutris" },
+    properties = { tag = "Games", switchtotag = true } },
+  { rule = { instance = "steam" },
+    properties = { tag = "Games", switchtotag = true } },
+  { rule = { instance = "ts3" },
+    properties = { tag = "Games", switchtotag = true } },
+  { rule = { instance = "code" },
+    properties = { tag = "Coding", switchtotag = true } },
     -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
@@ -587,6 +626,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 beautiful.useless_gap = 1
 
 awful.spawn.with_shell('feh --randomize --bg-fill /usr/share/backgrounds')
-awful.spawn.with_shell('picom &')
 awful.spawn.with_shell('polybar &')
+awful.spawn.with_shell('picom &')
 --awful.spawn.with_shell('xrandr --rate 144')
