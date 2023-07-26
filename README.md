@@ -1,12 +1,12 @@
 # DotFiles
 ---------------------------------------------------------------------------------------
+Layouts:
+
 https://awesomewm.org/doc/api/documentation/07-my-first-awesome.md.html#
 ---------------------------------------------------------------------------------------
-
-Layouts:
-	- Main Floating
-	- Games Fullscreen
-	- Programming Tile
+- Main Floating
+- Games Fullscreen
+- Programming Tile
 	
 	awful.layout.layouts = {
 	    awful.layout.suit.floating,
