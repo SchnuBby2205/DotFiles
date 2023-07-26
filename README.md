@@ -1,7 +1,10 @@
 # DotFiles
 /*---------------------------------------------------------------------------------------*/
+
 https://awesomewm.org/doc/api/documentation/07-my-first-awesome.md.html#
+
 /*---------------------------------------------------------------------------------------*/	
+
 Layouts:
 	- Main Floating
 	- Games Fullscreen
