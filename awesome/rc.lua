@@ -233,6 +233,7 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
+    awful.button({ modkey, "Control" }, 4, function (c) local c = awful.client.restore() if c then c:emit_signal("request::activate", "key.unminimize", {raise = true}) end end),
       --awful.button({ }, 3, function () mymainmenu:toggle() end),
       --awful.button({ }, 3, awful.tag.viewnext),
     -- Standart
@@ -469,9 +470,9 @@ end
 
 clientbuttons = gears.table.join(
     awful.button({ modkey }, 2, function (c) c:kill() end),    
-    awful.button({ modkey }, 5, function (c) c.minimized = true end),
-    awful.button({ modkey }, 4, function (c) local c = awful.client.restore() if c then c:emit_signal("request::activate", "key.unminimize", {raise = true}) end end),
-    awful.button({ modkey, "Control" }, 4, function (c) c.fullscreen = not c.fullscreen c:raise() end),
+    awful.button({ modkey, "Control" }, 5, function (c) c.minimized = true end),
+    awful.button({ modkey, "Control" }, 4, function (c) local c = awful.client.restore() if c then c:emit_signal("request::activate", "key.unminimize", {raise = true}) end end),
+    awful.button({ modkey }, 4, function (c) c.fullscreen = not c.fullscreen c:raise() end),
     --awful.button({ modkey, "Shift" }, 4, awful.tag.viewnext),
     --awful.button({ modkey, "Shift" }, 5, awful.tag.viewprev),
 
